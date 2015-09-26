@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
 
 	leveldb::Status status = leveldb::DB::Open(options, "./leveldb_test", &db);
 
-	if (false == status.ok()) {
+	if (!status.ok()) {
 		cerr << "Unable to open/create database './leveldb_test'" << endl;
 		cerr << status.ToString() << endl;
 		return -1;
