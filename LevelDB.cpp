@@ -27,6 +27,19 @@ void LevelDB::close_db() {
 	delete db;
 }
 
+string LevelDB::get_data(string key) {
+	string result = "Key Not Found!";
+	this->populate_db();
+
+	for(vector<pair<string, string>>::const_iterator i = _dbTBL.begin(); i != _dbTBL.end(); ++i) {
+		if (key == i->first) {
+			return i->second;
+		}
+	}
+
+	return result;
+}
+
 void LevelDB::set_data(string key, string value) {
 	ostringstream key_stream;
 	key_stream << key;
@@ -46,6 +59,21 @@ void LevelDB::display_data() {
 
 	for (kv_iterator->SeekToLast(); kv_iterator->Valid(); kv_iterator->Prev()) {
 		cout << kv_iterator->key().ToString() << " : " << kv_iterator->value().ToString() << endl;
+	}
+
+	if (!kv_iterator->status().ok()) {
+		cerr << "An error was found during the scan" << endl;
+		cerr << kv_iterator->status().ToString() << endl;
+	}
+
+	delete kv_iterator;
+}
+
+void LevelDB::populate_db() {
+	leveldb::Iterator *kv_iterator = db->NewIterator(leveldb::ReadOptions());
+
+	for (kv_iterator->SeekToLast(); kv_iterator->Valid(); kv_iterator->Prev()) {
+		_dbTBL.push_back(make_pair(kv_iterator->key().ToString(), kv_iterator->value().ToString()));
 	}
 
 	if (!kv_iterator->status().ok()) {

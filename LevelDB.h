@@ -1,5 +1,6 @@
 #include <iostream>
 #include <sstream>
+#include <vector>
 
 #include "leveldb/db.h"
 #include "snappy.h"
@@ -14,7 +15,11 @@ class LevelDB {
 private:
 	leveldb::DB *db;
 	leveldb::WriteOptions write_options;
+	vector<pair<string, string>> _dbTBL;
+
 	int INVALID = -1;
+
+	void populate_db();
 
 public:
 	LevelDB();
@@ -23,6 +28,7 @@ public:
 	int init_db(const string);
 	void close_db();
 
+	string get_data(string);
 	void set_data(string, string);
 	void delete_data(string);
 	void display_data();

@@ -18,6 +18,9 @@ int main() {
 
 	ldb->delete_data("key");
 	ldb->display_data();
+	cout << "\n";
+
+	cout << ldb->get_data("Kenneth Ham");
 
 	ldb->delete_all();
 	ldb->close_db();
