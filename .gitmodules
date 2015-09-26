@@ -1,0 +1,3 @@
+[submodule "LevelDB"]
+	path = LevelDB
+	url = https://kennetham@github.com/google/leveldb.git
