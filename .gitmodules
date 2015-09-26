@@ -1,3 +1,6 @@
 [submodule "LevelDB"]
 	path = LevelDB
 	url = https://kennetham@github.com/google/leveldb.git
+[submodule "Snappy"]
+	path = Snappy
+	url = https://kennetham@github.com/google/snappy.git

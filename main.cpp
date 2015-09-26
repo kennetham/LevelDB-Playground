@@ -2,6 +2,7 @@
 #include <sstream>
 
 #include "leveldb/db.h"
+#include "snappy.h"
 
 using namespace std;
 
@@ -18,6 +19,16 @@ int main(int argc, char **argv) {
 		cerr << status.ToString() << endl;
 		return -1;
 	}
+
+	string compressed_info;
+	string uncompressed_info = "This is a text test";
+	string output;
+
+	snappy::Compress(uncompressed_info.data(), uncompressed_info.size(), &output);
+	cout << &output << "\n";
+
+	snappy::Uncompress(output.data(), output.size(), &compressed_info);
+	cout << &compressed_info << "\n";
 
 	// Add sample values into Database
 	leveldb::WriteOptions write_options;
