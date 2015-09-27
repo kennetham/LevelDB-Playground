@@ -31,10 +31,19 @@ string LevelDB::get_data(string key) {
 	string result = "Key Not Found!";
 	this->populate_db();
 
-	for(vector<pair<string, string>>::const_iterator i = _dbTBL.begin(); i != _dbTBL.end(); ++i) {
-		if (key == i->first) {
-			return i->second;
-		}
+//	for(vector<pair<string, string>>::const_iterator i = _dbTABLE.begin(); i != _dbTABLE.end(); ++i) {
+//		if (key == i->first) {
+//			return i->second;
+//		}
+//	}
+
+//	for (auto& x: _dbTBL) {
+//		cout << "Key > " << x.first << " :: Value > " + x.second << endl;
+//	}
+
+	// Return Time Complexity O(1)
+	if (_dbTBL.find(key) != _dbTBL.end()) {
+		return _dbTBL[key];
 	}
 
 	return result;
@@ -72,8 +81,10 @@ void LevelDB::display_data() {
 void LevelDB::populate_db() {
 	leveldb::Iterator *kv_iterator = db->NewIterator(leveldb::ReadOptions());
 
+	// O(n) + O(1) = O(n)
 	for (kv_iterator->SeekToLast(); kv_iterator->Valid(); kv_iterator->Prev()) {
-		_dbTBL.push_back(make_pair(kv_iterator->key().ToString(), kv_iterator->value().ToString()));
+		_dbTBL[kv_iterator->key().ToString()] = kv_iterator->value().ToString(); // O(1)
+//		_dbTABLE.push_back(make_pair(kv_iterator->key().ToString(), kv_iterator->value().ToString()));
 	}
 
 	if (!kv_iterator->status().ok()) {

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <unordered_map>
 
 #include "leveldb/db.h"
 #include "snappy.h"
@@ -15,7 +16,8 @@ class LevelDB {
 private:
 	leveldb::DB *db;
 	leveldb::WriteOptions write_options;
-	vector<pair<string, string>> _dbTBL;
+//	vector<pair<string, string>> _dbTABLE;
+	unordered_map<string, string> _dbTBL;
 
 	int INVALID = -1;
 
