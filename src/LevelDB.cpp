@@ -3,6 +3,7 @@
 LevelDB::LevelDB() { }
 
 LevelDB::~LevelDB() {
+	_dbTBL.clear();
 	delete db;
 }
 
